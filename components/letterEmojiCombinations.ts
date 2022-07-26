@@ -313,7 +313,7 @@ const combinations: Record<string, Emoji[]> = {
     { description: "petri dish", emoji: "🧫" },
     { description: "purple", emoji: "🟣" },
   ],
-  Q: [],
+  Q: [{ description: "queen", emoji: "👸" }],
   R: [
     { description: "robot", emoji: "🤖" },
     { description: "raccoon", emoji: "🦝" },
