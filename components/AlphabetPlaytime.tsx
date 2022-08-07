@@ -28,11 +28,7 @@ export const AlphabetPlaytime = () => {
 
   useEffect(() => {
     const emojisForLetter = getEmojisForLetter(selectedLetter, 12);
-    if (emojisForLetter.length > 0) {
-      setSelectedEmoji(emojisForLetter[0]);
-    } else {
       setSelectedEmoji(null);
-    }
     setEmojis(emojisForLetter);
   }, [selectedLetter]);
 
