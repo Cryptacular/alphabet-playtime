@@ -17,6 +17,7 @@ import { LetterButton } from "./LetterButton";
 import { getEmojisForLetter } from "./letterEmojiCombinations";
 import { Emoji } from "../models/Emoji";
 import { alphabet } from "../models/alphabet";
+import { getPhoneticsForLetter } from "./letterPhonetics";
 
 export const AlphabetPlaytime = () => {
   const insets = useSafeAreaInsets();
@@ -25,10 +26,19 @@ export const AlphabetPlaytime = () => {
   const [selectedLetter, setSelectedLetter] = useState("A");
   const [selectedEmoji, setSelectedEmoji] = useState<Emoji | null>(null);
   const [emojis, setEmojis] = useState<Emoji[]>([]);
+  const [ttsEngine, setTtsEngine] = useState<"Samsung" | "Google" | null>(null);
+
+  useEffect(() => {
+    const f = async () => {
+      const engine = await getTextToSpeechEngine();
+      setTtsEngine(engine);
+    };
+    f();
+  });
 
   useEffect(() => {
     const emojisForLetter = getEmojisForLetter(selectedLetter, 12);
-      setSelectedEmoji(null);
+    setSelectedEmoji(null);
     setEmojis(emojisForLetter);
   }, [selectedLetter]);
 
@@ -76,7 +86,11 @@ export const AlphabetPlaytime = () => {
               selectedLetter={selectedEmoji?.emoji || null}
               onSelect={() => {
                 setSelectedEmoji(e);
-                speak(`${selectedLetter} is for ${e.description}`);
+                speak(
+                  `${getPhoneticsForLetter(selectedLetter, ttsEngine)} is for ${
+                    e.description
+                  }`
+                );
               }}
             />
           ))}
@@ -103,7 +117,7 @@ export const AlphabetPlaytime = () => {
                 selectedLetter={selectedLetter}
                 onSelect={() => {
                   setSelectedLetter(l);
-                  speak(l);
+                  speak(getPhoneticsForLetter(l, ttsEngine));
                 }}
               />
             ))}
@@ -157,7 +171,25 @@ const getStyles = (colorScheme: ColorSchemeName) =>
   });
 
 const speak = async (text: string) => {
-  if (!(await Speech.isSpeakingAsync())) {
-    Speech.speak(text, { rate: 0.8 });
+  if (await Speech.isSpeakingAsync()) {
+    await Speech.stop();
+  }
+
+  Speech.speak(text, { rate: 0.9 });
+};
+
+const getTextToSpeechEngine = async (): Promise<
+  "Samsung" | "Google" | null
+> => {
+  const voices = await Speech.getAvailableVoicesAsync();
+
+  if (!voices || voices.length < 1) {
+    return null;
+  }
+
+  if (voices.some((x) => x.identifier?.indexOf("SMT") > 0)) {
+    return "Samsung";
+  } else {
+    return "Google";
   }
 };
