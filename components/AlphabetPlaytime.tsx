@@ -29,8 +29,15 @@ export const AlphabetPlaytime = () => {
   const [ttsEngine, setTtsEngine] = useState<"Samsung" | "Google" | null>(null);
 
   useEffect(() => {
+    if (ttsEngine) {
+      return;
+    }
+
     const f = async () => {
-      const engine = await getTextToSpeechEngine();
+      let engine = await getTextToSpeechEngine();
+      if (!engine) {
+        engine = await getTextToSpeechEngine();
+      }
       setTtsEngine(engine);
     };
     f();
@@ -187,7 +194,7 @@ const getTextToSpeechEngine = async (): Promise<
     return null;
   }
 
-  if (voices.some((x) => x.identifier?.indexOf("SMT") > 0)) {
+  if (voices.slice(0, 10).some((x) => x.identifier?.indexOf("SMT") > 0)) {
     return "Samsung";
   } else {
     return "Google";
