@@ -34,10 +34,7 @@ export const AlphabetPlaytime = () => {
     }
 
     const f = async () => {
-      let engine = await getTextToSpeechEngine();
-      if (!engine) {
-        engine = await getTextToSpeechEngine();
-      }
+      const engine = await getTextToSpeechEngine();
       setTtsEngine(engine);
     };
     f();

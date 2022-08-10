@@ -2,7 +2,7 @@
   "expo": {
     "name": "Alphabet Playtime",
     "slug": "alphabet-playtime",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -17,12 +17,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.cryptacular.alphabetplaytime",
-      "buildNumber": "1.0.6",
+      "buildNumber": "1.0.7",
       "supportsTablet": true
     },
     "android": {
       "package": "com.cryptacular.alphabetplaytime",
-      "versionCode": 7,
+      "versionCode": 8,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
