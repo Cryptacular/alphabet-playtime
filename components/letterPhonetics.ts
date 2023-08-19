@@ -14,7 +14,6 @@ const samsungPhonetics: Record<string, string> = {
   O: "Oh",
   P: "Pea",
   Q: "Queue",
-  R: "Ar",
   S: "Ess",
   T: "Tea",
   U: "You",

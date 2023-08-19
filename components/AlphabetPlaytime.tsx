@@ -179,7 +179,7 @@ const speak = async (text: string) => {
     await Speech.stop();
   }
 
-  Speech.speak(text, { rate: 0.9 });
+  Speech.speak(text, { language: "en", rate: 0.9 });
 };
 
 const getTextToSpeechEngine = async (): Promise<
